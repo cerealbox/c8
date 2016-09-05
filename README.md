@@ -7,6 +7,8 @@ npm install -g purescript pulp bower
 
 bower install
 
+BUILD
+====================================================
 pulp build --to main.js
 
 EXECUTION
