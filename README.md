@@ -3,6 +3,8 @@ crazy eights!
 
 INSTALATION
 ====================================================
+npm install -g purescript pulp bower
+
 bower install
 
 pulp build --to main.js
