@@ -1,8 +1,10 @@
 var log = console.log.bind(console)
 
 exports.display = function(gs) {
-	if (typeof document != 'undefined')
-		displayo(gs)
+    return function() {
+    	if (typeof document != 'undefined')
+    		displayo(gs)
+    }
 }
 
 exports.timeout = function(milli) {
@@ -13,10 +15,4 @@ exports.timeout = function(milli) {
     }
 }
 
-exports.click = function(f) {
-	if (typeof document == 'undefined') return function() { setTimeout(f, 1000) }
 
-	return function() {
-		window.onmouseup = f
-	}
-}

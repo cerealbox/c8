@@ -4,10 +4,16 @@ crazy eights!
 INSTALATION
 ====================================================
 bower install
-pulp build --to main.js
+npm install
+./compile
 
 EXECUTION
 ====================================================
 node main.js
 	-or-
 open 'index.html' in a browser.
+
+CLIENT/SERVER EXECUTION
+====================================================
+node server.js
+open 'client.html' in a browser.

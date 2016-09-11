@@ -1,0 +1,7 @@
+#pulp run
+#pulp psci
+#pulp build --to main.js
+
+pulp build --main Main --to main.js
+pulp build --main Server --to server.js
+pulp build --main Client --to client.js

@@ -1,0 +1,27 @@
+{
+  "name": "c8",
+  "version": "1.0.0",
+  "description": "crazy eights!",
+  "main": "main.js",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
+    "path": "^0.12.7",
+    "ws": "^1.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cerealbox/c8.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cerealbox/c8/issues"
+  },
+  "homepage": "https://github.com/cerealbox/c8#readme"
+}

@@ -10,7 +10,9 @@
     "purescript-console": "^1.0.0",
     "purescript-random": "^1.0.0",
     "purescript-foldable-traversable": "^1.0.0",
-    "purescript-lists": "^1.0.1"
+    "purescript-lists": "^1.0.1",
+    "purescript-signal": "^7.0.0",
+    "purescript-argonaut-codecs": "^1.1.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^1.0.0"
