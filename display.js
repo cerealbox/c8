@@ -1,4 +1,5 @@
 var log = console.log.bind(console)
+document.ontouchmove = function(e){ e.preventDefault(); }
 
 function list2array(lst) {
 	function toCard(c) {

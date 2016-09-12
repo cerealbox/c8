@@ -2299,6 +2299,11 @@ var PS = {};
       return function (x) {
           return Data_Function.apply(showHand$prime$prime(dictShow))(Data_List.reverse(x));
       };
+  }; 
+  var pipe = function (a) {
+      return function (b) {
+          return b(a);
+      };
   };
   var mkCardView = function (v) {
       return new CardView(new Card(v.value0, v.value1), v.value1);
@@ -2812,19 +2817,19 @@ var PS = {};
       };
       if (v.discard instanceof Data_List.Cons) {
           return function __do() {
-              var v1 = Data_Function.apply(function ($426) {
-                  return shuffle(Data_Functor.map(Data_List.functorList)(toCard)(Data_List.dropWhile(sameFace(v.discard.value0.value0.value0))($426)));
+              var v1 = Data_Function.apply(function ($439) {
+                  return shuffle(Data_Functor.map(Data_List.functorList)(toCard)(Data_List.dropWhile(sameFace(v.discard.value0.value0.value0))($439)));
               })(v.discard)();
               return Data_Function.apply(Control_Applicative.pure(Control_Monad_Eff.applicativeEff))((function () {
-                  var $198 = {};
-                  for (var $199 in v) {
-                      if (v.hasOwnProperty($199)) {
-                          $198[$199] = v[$199];
+                  var $201 = {};
+                  for (var $202 in v) {
+                      if (v.hasOwnProperty($202)) {
+                          $201[$202] = v[$202];
                       };
                   };
-                  $198.deck = v1;
-                  $198.discard = Data_List.takeWhile(sameFace(v.discard.value0.value0.value0))(v.discard);
-                  return $198;
+                  $201.deck = v1;
+                  $201.discard = Data_List.takeWhile(sameFace(v.discard.value0.value0.value0))(v.discard);
+                  return $201;
               })())();
           };
       };
@@ -2842,14 +2847,14 @@ var PS = {};
               return function (card) {
                   if (v2 instanceof Data_List.Cons) {
                       return new Data_List.Cons((function () {
-                          var $211 = {};
-                          for (var $212 in v2.value0) {
-                              if (v2.value0.hasOwnProperty($212)) {
-                                  $211[$212] = v2.value0[$212];
+                          var $214 = {};
+                          for (var $215 in v2.value0) {
+                              if (v2.value0.hasOwnProperty($215)) {
+                                  $214[$215] = v2.value0[$215];
                               };
                           };
-                          $211.hand = new Data_List.Cons(card, v2.value0.hand);
-                          return $211;
+                          $214.hand = new Data_List.Cons(card, v2.value0.hand);
+                          return $214;
                       })(), v2.value1);
                   };
                   if (v2 instanceof Data_List.Nil) {
@@ -2866,15 +2871,15 @@ var PS = {};
           };
           if (v1.deck instanceof Data_List.Cons) {
               return Data_Function.apply(pickup(v - 1))((function () {
-                  var $218 = {};
-                  for (var $219 in v1) {
-                      if (v1.hasOwnProperty($219)) {
-                          $218[$219] = v1[$219];
+                  var $221 = {};
+                  for (var $222 in v1) {
+                      if (v1.hasOwnProperty($222)) {
+                          $221[$222] = v1[$222];
                       };
                   };
-                  $218.players = activePlayerPickup(v1.players)(v1.deck.value0);
-                  $218.deck = v1.deck.value1;
-                  return $218;
+                  $221.players = activePlayerPickup(v1.players)(v1.deck.value0);
+                  $221.deck = v1.deck.value1;
+                  return $221;
               })());
           };
           throw new Error("Failed pattern match at Game line 219, column 5 - line 229, column 18: " + [ v1.deck.constructor.name ]);
@@ -2885,17 +2890,17 @@ var PS = {};
       return eqCard;
   }, function (v) {
       return function (v1) {
-          var $225 = Data_Ord.compare(ordFace)(v.value0)(v1.value0);
-          if ($225 instanceof Data_Ordering.EQ) {
+          var $228 = Data_Ord.compare(ordFace)(v.value0)(v1.value0);
+          if ($228 instanceof Data_Ordering.EQ) {
               return Data_Ord.compare(ordSuit)(v.value1)(v1.value1);
           };
-          if ($225 instanceof Data_Ordering.LT) {
+          if ($228 instanceof Data_Ordering.LT) {
               return Data_Ordering.LT.value;
           };
-          if ($225 instanceof Data_Ordering.GT) {
+          if ($228 instanceof Data_Ordering.GT) {
               return Data_Ordering.GT.value;
           };
-          throw new Error("Failed pattern match at Game line 71, column 41 - line 74, column 17: " + [ $225.constructor.name ]);
+          throw new Error("Failed pattern match at Game line 71, column 41 - line 74, column 17: " + [ $228.constructor.name ]);
       };
   });
   var emptyGameState = {
@@ -2910,35 +2915,35 @@ var PS = {};
   var checkForWinnerAndUpdateScores = function (v) {
       var updateScore = function (score) {
           return function (p) {
-              var $231 = {};
-              for (var $232 in p) {
-                  if (p.hasOwnProperty($232)) {
-                      $231[$232] = p[$232];
+              var $234 = {};
+              for (var $235 in p) {
+                  if (p.hasOwnProperty($235)) {
+                      $234[$235] = p[$235];
                   };
               };
-              $231.score = p.score + (score * v.perCardScore | 0) | 0;
-              return $231;
+              $234.score = p.score + (score * v.perCardScore | 0) | 0;
+              return $234;
           };
       };
       if (v.players instanceof Data_List.Cons && v.players.value0.hand instanceof Data_List.Nil) {
           var points = Data_Function.apply(Data_Foldable.sum(Data_List.foldableList)(Data_Semiring.semiringInt))(Data_Functor.map(Data_List.functorList)(function (v1) {
               return Data_List.length(v1.hand);
           })(v.players.value1));
-          var $238 = {};
-          for (var $239 in v) {
-              if (v.hasOwnProperty($239)) {
-                  $238[$239] = v[$239];
+          var $241 = {};
+          for (var $242 in v) {
+              if (v.hasOwnProperty($242)) {
+                  $241[$242] = v[$242];
               };
           };
-          $238.done = true;
-          $238.players = new Data_List.Cons(updateScore(points)(v.players.value0), v.players.value1);
-          $238.perCardScore = (function () {
+          $241.done = true;
+          $241.players = new Data_List.Cons(updateScore(points)(v.players.value0), v.players.value1);
+          $241.perCardScore = (function () {
               if (points === 0) {
                   return v.perCardScore * 2 | 0;
               };
               return 1;
           })();
-          return $238;
+          return $241;
       };
       return v;
   };
@@ -2949,18 +2954,18 @@ var PS = {};
       return "@" + Data_Show.show(cardShow)(new Card(v.value0.value0, v.value1));
   });
   var gameStateShow = new Data_Show.Show(function (v) {
-      var $253 = Data_List.length(v.players);
-      if ($253 === 2) {
+      var $256 = Data_List.length(v.players);
+      if ($256 === 2) {
           if (v.players instanceof Data_List.Cons) {
-              var $256 = Data_List.filter(function (v1) {
+              var $259 = Data_List.filter(function (v1) {
                   return v1.id === 0;
               })(v.players);
-              if ($256 instanceof Data_List.Cons) {
-                  var $258 = Data_List.filter(function (v1) {
+              if ($259 instanceof Data_List.Cons) {
+                  var $261 = Data_List.filter(function (v1) {
                       return v1.id === 1;
                   })(v.players);
-                  if ($258 instanceof Data_List.Cons) {
-                      return "--------------------" + ("\n{" + (Data_Show.show(Data_Show.showInt)($256.value0.score) + ("} player0 \"" + ($256.value0.name + ("\": " + (showHand(cardShow)($256.value0.hand) + ("\nX" + (Data_Show.show(Data_Show.showInt)(v.perCardScore) + (" deck: " + (Data_Show.show(Data_Show.showInt)(Data_List.length(v.deck)) + (" cards\npile: " + (showHand(cardViewShow)(v.discard) + ("\n{" + (Data_Show.show(Data_Show.showInt)($258.value0.score) + ("} player1 \"" + ($258.value0.name + ("\": " + (showHand(cardShow)($258.value0.hand) + "\n--------------------\n"))))))))))))))))));
+                  if ($261 instanceof Data_List.Cons) {
+                      return "--------------------" + ("\n{" + (Data_Show.show(Data_Show.showInt)($259.value0.score) + ("} player0 \"" + ($259.value0.name + ("\": " + (showHand(cardShow)($259.value0.hand) + ("\nX" + (Data_Show.show(Data_Show.showInt)(v.perCardScore) + (" deck: " + (Data_Show.show(Data_Show.showInt)(Data_List.length(v.deck)) + (" cards\npile: " + (showHand(cardViewShow)(v.discard) + ("\n{" + (Data_Show.show(Data_Show.showInt)($261.value0.score) + ("} player1 \"" + ($261.value0.name + ("\": " + (showHand(cardShow)($261.value0.hand) + "\n--------------------\n"))))))))))))))))));
                   };
                   return Partial_Unsafe.unsafeCrashWith("no player 1.");
               };
@@ -2998,14 +3003,14 @@ var PS = {};
   var handlePlay = function (v) {
       return function (playCardViews) {
           var reverseTurn = function (v1) {
-              var $296 = {};
-              for (var $297 in v1) {
-                  if (v1.hasOwnProperty($297)) {
-                      $296[$297] = v1[$297];
+              var $299 = {};
+              for (var $300 in v1) {
+                  if (v1.hasOwnProperty($300)) {
+                      $299[$300] = v1[$300];
                   };
               };
-              $296.players = Data_List.reverse(v1.players);
-              return $296;
+              $299.players = Data_List.reverse(v1.players);
+              return $299;
           };
           var repeat = function (__copy_v1) {
               return function (__copy_f) {
@@ -3026,27 +3031,27 @@ var PS = {};
               };
           };
           var removeCards = function (p) {
-              var $303 = {};
-              for (var $304 in p) {
-                  if (p.hasOwnProperty($304)) {
-                      $303[$304] = p[$304];
+              var $306 = {};
+              for (var $307 in p) {
+                  if (p.hasOwnProperty($307)) {
+                      $306[$307] = p[$307];
                   };
               };
-              $303.hand = Data_List.difference(eqCard)(p.hand)(Data_Functor.map(Data_List.functorList)(toCard)(playCardViews));
-              return $303;
+              $306.hand = Data_List.difference(eqCard)(p.hand)(Data_Functor.map(Data_List.functorList)(toCard)(playCardViews));
+              return $306;
           };
           var playHand = function (v1) {
               if (v1.players instanceof Data_List.Cons) {
-                  var $307 = {};
-                  for (var $308 in v1) {
-                      if (v1.hasOwnProperty($308)) {
-                          $307[$308] = v1[$308];
+                  var $310 = {};
+                  for (var $311 in v1) {
+                      if (v1.hasOwnProperty($311)) {
+                          $310[$311] = v1[$311];
                       };
                   };
-                  $307.discard = Data_Semigroup.append(Data_List.semigroupList)(playCardViews)(v1.discard);
-                  $307.alreadyDrew = false;
-                  $307.players = new Data_List.Cons(removeCards(v1.players.value0), v1.players.value1);
-                  return $307;
+                  $310.discard = Data_Semigroup.append(Data_List.semigroupList)(playCardViews)(v1.discard);
+                  $310.alreadyDrew = false;
+                  $310.players = new Data_List.Cons(removeCards(v1.players.value0), v1.players.value1);
+                  return $310;
               };
               if (v1.players instanceof Data_List.Nil) {
                   return Partial_Unsafe.unsafeCrashWith("no players.");
@@ -3055,14 +3060,14 @@ var PS = {};
           };
           var nextTurn = function (v1) {
               if (v1.players instanceof Data_List.Cons) {
-                  var $315 = {};
-                  for (var $316 in v1) {
-                      if (v1.hasOwnProperty($316)) {
-                          $315[$316] = v1[$316];
+                  var $318 = {};
+                  for (var $319 in v1) {
+                      if (v1.hasOwnProperty($319)) {
+                          $318[$319] = v1[$319];
                       };
                   };
-                  $315.players = Data_Semigroup.append(Data_List.semigroupList)(v1.players.value1)(new Data_List.Cons(v1.players.value0, Data_List.Nil.value));
-                  return $315;
+                  $318.players = Data_Semigroup.append(Data_List.semigroupList)(v1.players.value1)(new Data_List.Cons(v1.players.value0, Data_List.Nil.value));
+                  return $318;
               };
               if (v1.players instanceof Data_List.Nil) {
                   return Partial_Unsafe.unsafeCrashWith("no players.");
@@ -3070,31 +3075,31 @@ var PS = {};
               throw new Error("Failed pattern match at Game line 260, column 1 - line 310, column 23: " + [ v1.constructor.name ]);
           };
           var play = Data_Functor.map(Data_List.functorList)(toCard)(playCardViews);
-          var $322 = Data_List.length(v.players);
-          if ($322 === 2) {
+          var $325 = Data_List.length(v.players);
+          if ($325 === 2) {
               if (play instanceof Data_List.Nil) {
                   if (v.alreadyDrew) {
                       return Data_Function.apply(Control_Applicative.pure(Control_Monad_Eff.applicativeEff))(Data_Function.apply(Gamestate)(Data_Function.apply(nextTurn)((function () {
-                          var $325 = {};
-                          for (var $326 in v) {
-                              if (v.hasOwnProperty($326)) {
-                                  $325[$326] = v[$326];
-                              };
-                          };
-                          $325.alreadyDrew = false;
-                          return $325;
-                      })())));
-                  };
-                  if (!v.alreadyDrew) {
-                      return Data_Function.apply(pickup(1))((function () {
                           var $328 = {};
                           for (var $329 in v) {
                               if (v.hasOwnProperty($329)) {
                                   $328[$329] = v[$329];
                               };
                           };
-                          $328.alreadyDrew = true;
+                          $328.alreadyDrew = false;
                           return $328;
+                      })())));
+                  };
+                  if (!v.alreadyDrew) {
+                      return Data_Function.apply(pickup(1))((function () {
+                          var $331 = {};
+                          for (var $332 in v) {
+                              if (v.hasOwnProperty($332)) {
+                                  $331[$332] = v[$332];
+                              };
+                          };
+                          $331.alreadyDrew = true;
+                          return $331;
                       })());
                   };
                   throw new Error("Failed pattern match at Game line 265, column 17 - line 267, column 75: " + [ v.alreadyDrew.constructor.name ]);
@@ -3110,26 +3115,26 @@ var PS = {};
           if (play instanceof Data_List.Nil) {
               if (v.alreadyDrew) {
                   return Data_Function.apply(Control_Applicative.pure(Control_Monad_Eff.applicativeEff))(Data_Function.apply(Gamestate)(Data_Function.apply(nextTurn)((function () {
-                      var $341 = {};
-                      for (var $342 in v) {
-                          if (v.hasOwnProperty($342)) {
-                              $341[$342] = v[$342];
-                          };
-                      };
-                      $341.alreadyDrew = false;
-                      return $341;
-                  })())));
-              };
-              if (!v.alreadyDrew) {
-                  return Data_Function.apply(pickup(1))((function () {
                       var $344 = {};
                       for (var $345 in v) {
                           if (v.hasOwnProperty($345)) {
                               $344[$345] = v[$345];
                           };
                       };
-                      $344.alreadyDrew = true;
+                      $344.alreadyDrew = false;
                       return $344;
+                  })())));
+              };
+              if (!v.alreadyDrew) {
+                  return Data_Function.apply(pickup(1))((function () {
+                      var $347 = {};
+                      for (var $348 in v) {
+                          if (v.hasOwnProperty($348)) {
+                              $347[$348] = v[$348];
+                          };
+                      };
+                      $347.alreadyDrew = true;
+                      return $347;
                   })());
               };
               throw new Error("Failed pattern match at Game line 276, column 17 - line 278, column 75: " + [ v.alreadyDrew.constructor.name ]);
@@ -3154,25 +3159,25 @@ var PS = {};
               var addRemoveBots = function (__copy_players) {
                   var players = __copy_players;
                   tco: while (true) {
-                      var $353 = Data_List.length(players);
-                      if ($353 < 2) {
+                      var $356 = Data_List.length(players);
+                      if ($356 < 2) {
                           return Data_Function.apply(addRemoveBots)(new Data_List.Cons({
                               hand: Data_List.Nil.value, 
                               score: 0, 
-                              name: "bot" + Data_Show.show(Data_Show.showInt)($353), 
+                              name: "bot" + Data_Show.show(Data_Show.showInt)($356), 
                               id: 0, 
                               ipport: "", 
                               ai: true, 
                               queue: true
                           }, players));
                       };
-                      if ($353 > 2) {
-                          var $354 = Data_List.sort(ordPlayer)(players);
-                          if ($354 instanceof Data_List.Cons && $354.value0.ai) {
-                              players = $354.value1;
+                      if ($356 > 2) {
+                          var $357 = Data_List.sort(ordPlayer)(players);
+                          if ($357 instanceof Data_List.Cons && $357.value0.ai) {
+                              players = $357.value1;
                               continue tco;
                           };
-                          return $354;
+                          return $357;
                       };
                       return players;
                   };
@@ -3181,14 +3186,14 @@ var PS = {};
                   return function (v3) {
                       if (v3 instanceof Data_List.Cons) {
                           return new Data_List.Cons((function () {
-                              var $360 = {};
-                              for (var $361 in v3.value0) {
-                                  if (v3.value0.hasOwnProperty($361)) {
-                                      $360[$361] = v3.value0[$361];
+                              var $363 = {};
+                              for (var $364 in v3.value0) {
+                                  if (v3.value0.hasOwnProperty($364)) {
+                                      $363[$364] = v3.value0[$364];
                                   };
                               };
-                              $360.id = v2;
-                              return $360;
+                              $363.id = v2;
+                              return $363;
                           })(), addIDs(v2 + 1 | 0)(v3.value1));
                       };
                       if (v3 instanceof Data_List.Nil) {
@@ -3202,40 +3207,40 @@ var PS = {};
                   if (v2 instanceof Data_List.Cons) {
                       return Data_Function.apply(Control_Applicative.pure(Control_Monad_Eff.applicativeEff))(Data_Function.apply(Gamestate)(Data_Function.apply(Data_Foldable.foldr(Data_List.foldableList)(function (v3) {
                           return function (v4) {
-                              var $372 = {};
-                              for (var $373 in v4) {
-                                  if (v4.hasOwnProperty($373)) {
-                                      $372[$373] = v4[$373];
+                              var $375 = {};
+                              for (var $376 in v4) {
+                                  if (v4.hasOwnProperty($376)) {
+                                      $375[$376] = v4[$376];
                                   };
                               };
-                              $372.players = new Data_List.Cons((function () {
-                                  var $369 = {};
-                                  for (var $370 in v3) {
-                                      if (v3.hasOwnProperty($370)) {
-                                          $369[$370] = v3[$370];
+                              $375.players = new Data_List.Cons((function () {
+                                  var $372 = {};
+                                  for (var $373 in v3) {
+                                      if (v3.hasOwnProperty($373)) {
+                                          $372[$373] = v3[$373];
                                       };
                                   };
-                                  $369.hand = Data_Function.apply(Data_List.sort(ordCard))(Data_List.take(8)(v4.deck));
-                                  return $369;
+                                  $372.hand = Data_Function.apply(Data_List.sort(ordCard))(Data_List.take(8)(v4.deck));
+                                  return $372;
                               })(), v4.players);
-                              $372.deck = Data_List.drop(8)(v4.deck);
-                              return $372;
+                              $375.deck = Data_List.drop(8)(v4.deck);
+                              return $375;
                           };
                       })((function () {
-                          var $379 = {};
-                          for (var $380 in v) {
-                              if (v.hasOwnProperty($380)) {
-                                  $379[$380] = v[$380];
+                          var $382 = {};
+                          for (var $383 in v) {
+                              if (v.hasOwnProperty($383)) {
+                                  $382[$383] = v[$383];
                               };
                           };
-                          $379.players = Data_List.Nil.value;
-                          $379.deck = v2.value1;
-                          $379.discard = new Data_List.Cons(new CardView(v2.value0, v2.value0.value1), Data_List.Nil.value);
-                          $379.done = false;
-                          $379.spectators = Data_List.filter(function (v3) {
+                          $382.players = Data_List.Nil.value;
+                          $382.deck = v2.value1;
+                          $382.discard = new Data_List.Cons(new CardView(v2.value0, v2.value0.value1), Data_List.Nil.value);
+                          $382.done = false;
+                          $382.spectators = Data_List.filter(function (v3) {
                               return v3.queue === false;
                           })(v.spectators);
-                          return $379;
+                          return $382;
                       })()))(Data_Function.apply(addIDs(0))(Data_Function.apply(addRemoveBots)(Data_Semigroup.append(Data_List.semigroupList)(Data_List.filter(function (v3) {
                           return v3.queue === true;
                       })(v.spectators))(v.players))))))();
@@ -3244,37 +3249,70 @@ var PS = {};
               };
           };
           if (v1 instanceof AddPlayer) {
-              return Data_Function.apply(Control_Applicative.pure(Control_Monad_Eff.applicativeEff))((function () {
-                  var $388 = {};
-                  for (var $389 in v) {
-                      if (v.hasOwnProperty($389)) {
-                          $388[$389] = v[$389];
+              var randomName = function __do() {
+                  var v2 = shuffle(new Data_List.Cons("erik", new Data_List.Cons("jafar", new Data_List.Cons("pablo", new Data_List.Cons("wang", new Data_List.Cons("morty", Data_List.Nil.value))))))();
+                  return Data_Function.apply(Control_Applicative.pure(Control_Monad_Eff.applicativeEff))((function () {
+                      if (v2 instanceof Data_List.Cons) {
+                          return v2.value0;
                       };
-                  };
-                  $388.spectators = new Data_List.Cons({
-                      hand: Data_List.Nil.value, 
-                      score: 0, 
-                      name: "anon", 
-                      id: 0, 
-                      ipport: v1.value0, 
-                      ai: false, 
-                      queue: true
-                  }, v.spectators);
-                  return $388;
-              })());
+                      if (v2 instanceof Data_List.Nil) {
+                          return "moe";
+                      };
+                      throw new Error("Failed pattern match at Game line 362, column 13 - line 366, column 1: " + [ v2.constructor.name ]);
+                  })())();
+              };
+              return function __do() {
+                  var v2 = randomName();
+                  return Data_Function.apply(Control_Applicative.pure(Control_Monad_Eff.applicativeEff))((function () {
+                      var $396 = {};
+                      for (var $397 in v) {
+                          if (v.hasOwnProperty($397)) {
+                              $396[$397] = v[$397];
+                          };
+                      };
+                      $396.spectators = new Data_List.Cons({
+                          hand: Data_List.Nil.value, 
+                          score: 0, 
+                          name: v2, 
+                          id: 0, 
+                          ipport: v1.value0, 
+                          ai: false, 
+                          queue: true
+                      }, v.spectators);
+                      return $396;
+                  })())();
+              };
           };
           if (v1 instanceof RemovePlayer) {
               return Data_Function.apply(Control_Applicative.pure(Control_Monad_Eff.applicativeEff))((function () {
-                  var $394 = {};
-                  for (var $395 in v) {
-                      if (v.hasOwnProperty($395)) {
-                          $394[$395] = v[$395];
+                  var $407 = {};
+                  for (var $408 in v) {
+                      if (v.hasOwnProperty($408)) {
+                          $407[$408] = v[$408];
                       };
                   };
-                  $394.spectators = Data_List.filter(function (v2) {
+                  $407.spectators = Data_List.filter(function (v2) {
                       return v1.value0 === v2.ipport === false;
                   })(v.spectators);
-                  return $394;
+                  $407.players = pipe(v.players)(Data_Functor.map(Data_List.functorList)(function (v2) {
+                      var $403 = v2.ipport === v1.value0;
+                      if ($403) {
+                          var $404 = {};
+                          for (var $405 in v2) {
+                              if (v2.hasOwnProperty($405)) {
+                                  $404[$405] = v2[$405];
+                              };
+                          };
+                          $404.ai = true;
+                          $404.name = v2.name + "bot";
+                          return $404;
+                      };
+                      if (!$403) {
+                          return v2;
+                      };
+                      throw new Error("Failed pattern match at Game line 370, column 42 - line 372, column 36: " + [ $403.constructor.name ]);
+                  }));
+                  return $407;
               })());
           };
           throw new Error("Failed pattern match at Game line 313, column 1 - line 315, column 52: " + [ v.constructor.name, v1.constructor.name ]);
@@ -3303,7 +3341,7 @@ var PS = {};
           if (possiblePlays instanceof Data_List.Nil) {
               return new Play(Data_List.Nil.value);
           };
-          throw new Error("Failed pattern match at Game line 369, column 5 - line 371, column 24: " + [ possiblePlays.constructor.name ]);
+          throw new Error("Failed pattern match at Game line 381, column 5 - line 383, column 24: " + [ possiblePlays.constructor.name ]);
       };
       return new Play(Data_List.Nil.value);
   };
@@ -3340,6 +3378,7 @@ var PS = {};
   exports["handlePlay"] = handlePlay;
   exports["mkCardView"] = mkCardView;
   exports["pickup"] = pickup;
+  exports["pipe"] = pipe;
   exports["reshuffle"] = reshuffle;
   exports["showHand"] = showHand;
   exports["showPlay"] = showPlay;

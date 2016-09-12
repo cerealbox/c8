@@ -868,41 +868,8 @@ var PS = {};
   exports["bindEither"] = bindEither;
 })(PS["Data.Either"] = PS["Data.Either"] || {});
 (function(exports) {var log = console.log.bind(console)
-
   // -------------------------------------------------------------
-  if (typeof document == 'undefined') {
-      var fs = require('fs')
-      var http = require('http')
-      var path = require('path')
 
-      http.createServer(function (req, res) {
-          var filePath = '.' + req.url
-          if (filePath == './')
-              filePath = './index.html'
-          var ext = String(path.extname(filePath)).toLowerCase()
-
-          var mimeTypes = {
-              '.html': 'text/html',
-              '.js': 'text/javascript',
-              '.css': 'text/css',
-              '.json': 'application/json',
-              '.png': 'image/png'
-          }
-        
-          try {
-              var data = fs.readFileSync(filePath)
-
-              res.writeHead(200, {'Content-Type': mimeTypes[ext] || 'text/plain'})
-              res.end(data)
-          } catch(e) {
-              res.writeHead(404)
-              res.end("404 not found.")
-          }
-
-      }).listen(80, "200.200.200.5")
-
-      log("static file webserver running at http://200.200.200.5:80/")
-  }
   // -------------------------------------------------------------
 
   //======================================================================
@@ -2747,7 +2714,7 @@ var PS = {};
           if (possiblePlays instanceof Data_List.Nil) {
               return new Play(Data_List.Nil.value);
           };
-          throw new Error("Failed pattern match at Game line 369, column 5 - line 371, column 24: " + [ possiblePlays.constructor.name ]);
+          throw new Error("Failed pattern match at Game line 381, column 5 - line 383, column 24: " + [ possiblePlays.constructor.name ]);
       };
       return new Play(Data_List.Nil.value);
   };
@@ -3102,7 +3069,7 @@ var PS = {};
       return WS.waitForEvent(socketEventLoop)();
   };
   var main = function __do() {
-      WS.connect("200.200.200.5")(8080)();
+      WS.connect("200.200.200.5")(888)();
       WS.waitForEvent(socketEventLoop)();
       return $foreign.waitForMouseEvent(uiEventLoop)();
   };

@@ -18,6 +18,7 @@ foreign import waitForEvent :: forall eff a.
                                Eff (socket :: SOCKET | eff) Unit
 
 foreign import listen :: forall e. String -> Int -> Eff (socket :: SOCKET | e) Unit
+foreign import listenStatic :: forall e. String -> Int -> Eff (socket :: SOCKET | e) Unit
 foreign import getEvent :: forall e. Eff (socket :: SOCKET | e) SocketEvent
 foreign import sendToAll :: forall e. Json -> Eff (socket :: SOCKET | e) Unit
 foreign import send :: forall e. Json -> Eff (socket :: SOCKET | e) Unit

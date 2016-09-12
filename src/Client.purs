@@ -50,6 +50,6 @@ socketEventLoop = do
 -- --------------------------------------------------------------------------------
 main :: forall e. Eff (console :: CONSOLE, mouse :: MOUSE, socket :: SOCKET | e) Unit
 main = do
-    connect "200.200.200.5" 8080
+    connect "200.200.200.5" 888
     waitForEvent socketEventLoop
     waitForMouseEvent uiEventLoop

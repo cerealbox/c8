@@ -351,15 +351,27 @@ update (Gamestate gs) NewGame = do
 
 
 --@TODO: rename 'AddSpectator'
-update (Gamestate gs) (AddPlayer ipport) = 
+update (Gamestate gs) (AddPlayer ipport) = do
+    name <- randomName
     pure $ Gamestate gs {
-        spectators = Player {hand: Nil, score: 0, name: "anon", id: 0, ipport: ipport, ai: false, queue: true} : gs.spectators
+        spectators = Player {hand: Nil, score: 0, name: name, id: 0, ipport: ipport, ai: false, queue: true} : gs.spectators
     }
+    where
+        randomName = do
+            x <- shuffle ("erik" : "jafar" : "pablo" : "wang" : "morty" : Nil)
+            pure $ case x of
+                name : _ -> name
+                Nil -> "moe"
 
 update (Gamestate gs) (RemovePlayer i) = 
     pure $ Gamestate gs {
-        spectators = filter (\(Player {ipport}) -> (i == ipport) == false) gs.spectators
-    }    
+        spectators = filter (\(Player {ipport}) -> (i == ipport) == false) gs.spectators,
+        players = gs.players |>
+            map (\(player@(Player p)) -> case p.ipport == i of
+                    true -> Player p {ai = true, name = p.name <> "bot"}
+                    false -> player
+            )
+    }
 
 -- --------------------------------------------------------------------------------
 --validPlay? :: List CardView -> Gamestate -> Boolean

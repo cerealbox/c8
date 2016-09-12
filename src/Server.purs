@@ -75,5 +75,6 @@ main = do
     log $ showHand $ sort x
     log "\n"
 
-    listen "200.200.200.5" 8080
+    listenStatic "200.200.200.5" 88
+    listen "200.200.200.5" 888
     waitForEvent $ gameLoop emptyGameState

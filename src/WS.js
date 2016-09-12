@@ -1,40 +1,50 @@
 var log = console.log.bind(console)
 var WebSocketServer = require('ws').Server
 
-// -------------------------------------------------------------
-if (typeof document == 'undefined') {
-    var fs = require('fs')
-    var http = require('http')
-    var path = require('path')
 
-    http.createServer(function (req, res) {
-        var filePath = '.' + req.url
-        if (filePath == './')
-            filePath = './index.html'
-        var ext = String(path.extname(filePath)).toLowerCase()
+exports.listenStatic = function(ip) {
+    return function(port) {
+        return function() {
 
-        var mimeTypes = {
-            '.html': 'text/html',
-            '.js': 'text/javascript',
-            '.css': 'text/css',
-            '.json': 'application/json',
-            '.png': 'image/png'
+            if (typeof document == 'undefined') {
+                var fs = require('fs')
+                var http = require('http')
+                var path = require('path')
+
+                http.createServer(function (req, res) {
+                    var filePath = '.' + req.url
+                    if (filePath == './')
+                        filePath = './index.html'
+                    var ext = String(path.extname(filePath)).toLowerCase()
+
+                    var mimeTypes = {
+                        '.html': 'text/html',
+                        '.js': 'text/javascript',
+                        '.css': 'text/css',
+                        '.json': 'application/json',
+                        '.png': 'image/png'
+                    }
+                    
+                    try {
+                        var data = fs.readFileSync(filePath)
+
+                        res.writeHead(200, {'Content-Type': mimeTypes[ext] || 'text/plain'})
+                        res.end(data)
+                    } catch(e) {
+                        res.writeHead(404)
+                        res.end("404 not found.")
+                    }
+
+                }).listen(port, ip)
+
+                log("static file webserver running at http://" + ip + ":" + port + "/")
+            }
+
         }
-        
-        try {
-            var data = fs.readFileSync(filePath)
-
-            res.writeHead(200, {'Content-Type': mimeTypes[ext] || 'text/plain'})
-            res.end(data)
-        } catch(e) {
-            res.writeHead(404)
-            res.end("404 not found.")
-        }
-
-    }).listen(80, "200.200.200.5")
-
-    log("static file webserver running at http://200.200.200.5:80/")
+    }
 }
+// -------------------------------------------------------------
+
 // -------------------------------------------------------------
 
 //======================================================================
